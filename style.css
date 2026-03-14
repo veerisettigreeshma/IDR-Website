@@ -1,0 +1,1176 @@
+/* ============================================================
+   VARIABLES & RESET
+   All colours and fonts are defined here as variables
+   so they are easy to change in one place
+============================================================ */
+
+:root {
+  --orange:       #FF6B1A;
+  --orange-dark:  #E04A00;
+  --orange-light: #FF9A5C;
+  --orange-pale:  #FFF0E8;
+  --black:        #0D0D0D;
+  --dark:         #1A1A1A;
+  --mid:          #3A3A3A;
+  --muted:        #777777;
+  --light:        #F7F7F7;
+  --white:        #FFFFFF;
+  --border:       #E8E8E8;
+
+  --font-heading: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  --nav-height:   72px;
+  --radius:       6px;
+  --transition:   0.25s ease;
+}
+
+/* Reset — removes browser default spacing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* smooth scrolling when nav links are clicked */
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--dark);
+  background: var(--white);
+  line-height: 1.65;
+  overflow-x: hidden; /* prevent horizontal scroll */
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+
+/* ============================================================
+   REUSABLE UTILITY CLASSES
+   Used across multiple sections
+============================================================ */
+
+/* Centred max-width wrapper */
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Small orange label above headings e.g. "About IDR" */
+.section-label {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+
+/* Large bold section headings */
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, 2.5rem); /* scales with screen size */
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--black);
+  margin-bottom: 16px;
+}
+
+/* Regular paragraph under a section heading */
+.section-body {
+  font-size: 1.0625rem;
+  color: var(--mid);
+  line-height: 1.8;
+}
+
+/* Orange filled button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--orange);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: var(--radius);
+  border: 2px solid var(--orange);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-primary:hover {
+  background: var(--orange-dark);
+  border-color: var(--orange-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 107, 26, 0.3);
+}
+
+/* Outlined / ghost button */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: var(--radius);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Makes a button full width (used in contact form) */
+.btn-full {
+  width: 100%;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 16px;
+}
+
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+
+nav {
+  position: fixed;         /* sticks to top of screen */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;           /* sits above everything else */
+  transition: box-shadow var(--transition);
+}
+
+/* Shadow added by JavaScript when user scrolls */
+nav.scrolled {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Flexbox row: logo on left, links on right */
+.nav-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo group (image + text) */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo-img {
+  width: 36px;
+  height: 36px;
+}
+
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-idr {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  line-height: 1;
+}
+
+.nav-fullname {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+}
+
+/* Desktop nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--mid);
+  transition: color var(--transition);
+  position: relative;
+}
+
+/* Underline animation on hover */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--orange);
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Orange CTA button in nav */
+.nav-cta-btn {
+  background: var(--orange) !important;
+  color: var(--white) !important;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-weight: 600 !important;
+  transition: background var(--transition) !important;
+}
+
+.nav-cta-btn::after {
+  display: none !important; /* no underline on this one */
+}
+
+.nav-cta-btn:hover {
+  background: var(--orange-dark) !important;
+}
+
+/* Hamburger button — hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--dark);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+
+/* Animate hamburger into X when open */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile dropdown menu — hidden by default */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 16px 32px 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+}
+
+/* Shown by JavaScript when hamburger is clicked */
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--mid);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color var(--transition);
+}
+
+.mobile-link:hover {
+  color: var(--orange);
+}
+
+.mobile-cta {
+  margin-top: 12px;
+  background: var(--orange);
+  color: var(--white) !important;
+  text-align: center;
+  padding: 14px;
+  border-radius: var(--radius);
+  border-bottom: none;
+  font-weight: 600;
+}
+
+.mobile-cta:hover {
+  background: var(--orange-dark);
+}
+
+
+/* ============================================================
+   SECTION 1: HERO
+============================================================ */
+
+#hero {
+  min-height: 100vh;
+  padding-top: var(--nav-height);
+  display: flex;
+  align-items: center;
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle grid pattern background */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Orange radial glow on the right side */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 65% at 75% 50%, rgba(255, 107, 26, 0.13), transparent 65%);
+  pointer-events: none;
+}
+
+/* Two column layout: text left, cube right */
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding: 80px 32px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Small pill badge above the headline */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 107, 26, 0.12);
+  border: 1px solid rgba(255, 107, 26, 0.3);
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+
+.hero-badge span:last-child {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange-light);
+}
+
+/* Pulsing orange dot in the badge */
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--orange);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* Big white headline */
+.hero-headline {
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+
+/* Orange italic highlight in headline */
+.hero-headline em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+/* Subheading text */
+.hero-subhead {
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.8;
+  margin-bottom: 36px;
+  max-width: 500px;
+}
+
+/* Row of two buttons */
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+/* Stats row */
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--orange);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.03em;
+}
+
+/* Right side: cube graphic */
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-cube-wrap {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+/* Floating animation on the cube */
+.hero-cube-svg {
+  width: 100%;
+  height: 100%;
+  animation: floatCube 6s ease-in-out infinite;
+}
+
+@keyframes floatCube {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+/* Soft glow circle behind cube */
+.cube-glow-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(255, 107, 26, 0.15), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+
+/* ============================================================
+   SECTION 2: ABOUT
+============================================================ */
+
+#about {
+  padding: 110px 0;
+  background: var(--white);
+}
+
+/* Two column layout */
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+}
+
+/* Dark card on the left */
+.about-card {
+  background: var(--dark);
+  border-radius: 10px;
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Orange top border line on the card */
+.about-card-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--orange-light));
+}
+
+/* Quote text inside the card */
+.about-card-quote {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.45;
+  margin-bottom: 28px;
+}
+
+.about-card-quote span {
+  color: var(--orange);
+}
+
+/* Row with icon + text inside card */
+.about-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+/* Orange circle icon */
+.about-card-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.about-card-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.about-card-meta strong {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.about-card-meta p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Pill tags row */
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: rgba(255, 107, 26, 0.15);
+  color: var(--orange-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.04em;
+}
+
+/* Right side text paragraphs */
+.about-content p {
+  color: var(--mid);
+  line-height: 1.85;
+  margin-bottom: 18px;
+  font-size: 1rem;
+}
+
+.about-cta {
+  margin-top: 24px;
+  display: inline-flex;
+}
+
+
+/* ============================================================
+   SECTION 3: SERVICES
+============================================================ */
+
+#services {
+  padding: 110px 0;
+  background: var(--light);
+}
+
+/* Centred intro text */
+.services-head {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 56px;
+}
+
+/* Three equal columns for cards */
+.services-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+/* Individual card */
+.service-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 36px 30px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+/* Orange bottom bar that slides in on hover */
+.service-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--orange-light));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.service-card:hover::after {
+  transform: scaleX(1);
+}
+
+/* Orange icon box */
+.service-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--orange-pale);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.service-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.service-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.service-card p {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* Small tag line under card description */
+.service-tag {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--orange);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Dark pipeline bar */
+.pipeline {
+  background: var(--black);
+  border-radius: 10px;
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle orange glow inside pipeline */
+.pipeline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(255, 107, 26, 0.1), transparent);
+  pointer-events: none;
+}
+
+.pipeline-title {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 40px;
+}
+
+/* Four steps in a row */
+.pipeline-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pipeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 100px;
+  max-width: 150px;
+  text-align: center;
+}
+
+/* Numbered circle */
+.pipeline-num {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 107, 26, 0.12);
+  border: 1.5px solid rgba(255, 107, 26, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--orange);
+}
+
+.pipeline-label {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.pipeline-sub {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Arrow between steps */
+.pipeline-arrow {
+  font-size: 1.4rem;
+  color: var(--orange);
+  opacity: 0.4;
+  padding-bottom: 32px;
+  flex-shrink: 0;
+}
+
+
+/* ============================================================
+   SECTION 4: COMMUNITY
+============================================================ */
+
+#community {
+  padding: 110px 0;
+  background: var(--white);
+}
+
+/* Two columns: text left, cards right */
+.community-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 72px;
+  align-items: start;
+}
+
+/* Stack of four audience cards */
+.community-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Individual audience card */
+.community-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.community-item:hover {
+  border-color: var(--orange-light);
+  box-shadow: 0 4px 20px rgba(255, 107, 26, 0.07);
+}
+
+/* Orange icon box */
+.community-item-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--orange-pale);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.community-item-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.community-item h4 {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 5px;
+}
+
+.community-item p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+
+/* ============================================================
+   SECTION 5: CONTACT
+============================================================ */
+
+#contact {
+  padding: 110px 0;
+  background: var(--light);
+}
+
+/* Two columns: text left, form right */
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 72px;
+  align-items: start;
+}
+
+/* Contact info items (email, location) */
+.contact-info {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9375rem;
+  color: var(--mid);
+}
+
+.contact-info-item svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* White card wrapping the form */
+.contact-form-wrap {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 40px 36px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* Each label + input pair */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dark);
+  letter-spacing: 0.02em;
+}
+
+/* Inputs, selects, textareas all share the same style */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--dark);
+  background: var(--white);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+  resize: vertical; /* only textarea */
+}
+
+/* Highlight border on focus */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.12);
+}
+
+/* Success message — hidden by default */
+.form-success {
+  display: none;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #2a7a2a;
+  background: #f0fff0;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid #b6e8b6;
+}
+
+/* Shown by JavaScript after form submit */
+.form-success.visible {
+  display: block;
+}
+
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+footer {
+  background: var(--black);
+  padding: 56px 0 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Three columns: brand, links, links */
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 48px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.footer-logo-img {
+  width: 30px;
+  height: 30px;
+}
+
+.footer-idr {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--white);
+  letter-spacing: 0.1em;
+}
+
+.footer-tagline {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.footer-links h4 {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 18px;
+}
+
+.footer-links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--orange-light);
+}
+
+
+/* ============================================================
+   RESPONSIVE — TABLET (max 900px)
+============================================================ */
+
+@media (max-width: 900px) {
+
+  /* Switch hero to single column, cube goes below */
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 60px 24px;
+    gap: 40px;
+  }
+
+  .hero-subhead,
+  .hero-headline { max-width: 100%; }
+
+  .hero-actions { justify-content: center; }
+
+  .hero-stats { justify-content: center; }
+
+  /* Hide the cube on smaller screens to save space */
+  .hero-visual { display: none; }
+
+  /* About section stacks */
+  .about-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  /* Service cards become 1 column */
+  .services-cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Community stacks */
+  .community-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  /* Contact stacks */
+  .contact-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  /* Footer stacks */
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* Pipeline wraps into rows */
+  .pipeline-steps { gap: 16px; }
+  .pipeline-arrow { display: none; }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE — MOBILE (max 640px)
+============================================================ */
+
+@media (max-width: 640px) {
+
+  /* Show hamburger, hide desktop links */
+  .hamburger { display: flex; }
+  .nav-links  { display: none; }
+
+  .container { padding: 0 20px; }
+
+  /* Smaller padding on sections */
+  #about, #services, #community, #contact { padding: 72px 0; }
+
+  /* Smaller pipeline steps */
+  .pipeline { padding: 32px 24px; }
+
+  .hero-stats { gap: 24px; }
+
+  .contact-form-wrap { padding: 28px 22px; }
+
+}
